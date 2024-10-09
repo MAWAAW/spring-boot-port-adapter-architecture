@@ -1,6 +1,17 @@
 package org.mawaaw.springbootportadapterarchitecture.domain.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.mawaaw.springbootportadapterarchitecture.infrastructure.entity.ReservationEntity;
+
 import java.util.List;
 
-public record Room(Long id, String roomNumber, RoomType roomType, List<Reservation> reservations) {
+@Data @AllArgsConstructor @NoArgsConstructor @Builder
+public class Room {
+    private Long id;
+    private String roomNumber;
+    private RoomType roomType;
+    private List<ReservationEntity> reservations;
 }
