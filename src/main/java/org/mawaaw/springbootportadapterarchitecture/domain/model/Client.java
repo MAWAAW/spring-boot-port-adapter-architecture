@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.mawaaw.springbootportadapterarchitecture.infrastructure.entity.ReservationEntity;
 
 import java.util.List;
 
@@ -15,5 +14,5 @@ public class Client {
     private String lastName;
     private String email;
     private String password;
-    private List<ReservationEntity> reservations;
+    private List<Reservation> reservations;
 }

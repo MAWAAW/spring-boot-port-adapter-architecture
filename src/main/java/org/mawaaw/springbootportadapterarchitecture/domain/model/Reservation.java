@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.mawaaw.springbootportadapterarchitecture.infrastructure.entity.ClientEntity;
-import org.mawaaw.springbootportadapterarchitecture.infrastructure.entity.RoomEntity;
 
 import java.time.LocalDate;
 
@@ -15,6 +13,6 @@ public class Reservation {
     private LocalDate checkIN;
     private LocalDate checkOUT;
     private ReservationStatus status;
-    private ClientEntity client;
-    private RoomEntity room;
+    private Client client;
+    private Room room;
 }

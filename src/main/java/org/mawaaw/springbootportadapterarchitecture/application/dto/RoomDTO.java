@@ -4,7 +4,7 @@ import org.mawaaw.springbootportadapterarchitecture.domain.model.RoomType;
 
 import java.util.Objects;
 
-public record RoomDTO(Long id, String name, RoomType roomType) {
+public record RoomDTO(Long id, String roomNumber, RoomType roomType) {
 
     @Override
     public boolean equals(Object o) {
