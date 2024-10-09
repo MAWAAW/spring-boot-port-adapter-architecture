@@ -12,4 +12,5 @@ public interface RoomRepository {
     void deleteById(Long id);
     Room findByRoomNumber(String roomNumber);
     boolean existsByRoomNumber(String roomNumber);
+    boolean existsById(Long id);
 }
