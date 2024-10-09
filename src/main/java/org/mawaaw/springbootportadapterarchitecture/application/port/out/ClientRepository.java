@@ -12,4 +12,5 @@ public interface ClientRepository {
     void deleteById(Long id);
     Client findByEmail(String email);
     boolean existsByEmail(String email);
+    boolean existsById(Long id);
 }

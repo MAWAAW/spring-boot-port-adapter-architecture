@@ -4,4 +4,6 @@ import org.mawaaw.springbootportadapterarchitecture.infrastructure.entity.Client
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ClientJpaRepository extends JpaRepository<ClientEntity, Long> {
+    ClientEntity findByEmail(String email);
+    boolean existsByEmail(String email);
 }
