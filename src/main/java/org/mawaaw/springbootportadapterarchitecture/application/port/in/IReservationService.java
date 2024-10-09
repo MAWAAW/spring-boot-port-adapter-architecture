@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface IReservationService {
     boolean isRoomAvailable(RoomDTO roomDTO, LocalDate checkINDate, LocalDate checkOUTDate);
-    ReservationDTO makeReservation(ClientDTO client, RoomDTO roomDTO, LocalDate CheckINDate, LocalDate CheckOUTDate) throws RoomNotFoundException, RoomNotAvailableException, ClientNotFoundException;
+    ReservationDTO makeReservation(ClientDTO client, RoomDTO roomDTO, LocalDate checkINDate, LocalDate checkOUTDate) throws RoomNotFoundException, RoomNotAvailableException, ClientNotFoundException;
     void cancelReservation(Long reservationId) throws ReservationNotFoundException;
     List<ReservationDTO> getReservationsByClient(ClientDTO client) throws ClientNotFoundException, ClientSaveException;
     List<ReservationDTO> getReservationsByRoom(RoomDTO room);

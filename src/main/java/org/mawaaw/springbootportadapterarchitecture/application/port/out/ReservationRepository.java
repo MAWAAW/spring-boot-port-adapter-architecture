@@ -16,4 +16,5 @@ public interface ReservationRepository {
     List<Reservation> findByClient(Client client);
     List<Reservation> findByRoom(Room room);
     List<Reservation> findOverlappingReservations(Long roomId, LocalDate checkIN, LocalDate checkOUT);
+    boolean existsById(Long reservationId);
 }
