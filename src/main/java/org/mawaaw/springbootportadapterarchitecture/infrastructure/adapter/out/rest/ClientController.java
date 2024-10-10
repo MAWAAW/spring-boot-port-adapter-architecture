@@ -2,8 +2,8 @@ package org.mawaaw.springbootportadapterarchitecture.infrastructure.adapter.out.
 
 import org.mawaaw.springbootportadapterarchitecture.application.dto.ClientDTO;
 import org.mawaaw.springbootportadapterarchitecture.application.service.ClientServiceImpl;
-import org.mawaaw.springbootportadapterarchitecture.domain.exception.ClientNotFoundException;
-import org.mawaaw.springbootportadapterarchitecture.domain.exception.EmailAlreadyExistsException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,32 +19,39 @@ public class ClientController {
     }
 
     @PostMapping("/register")
-    public ClientDTO registerClient(@RequestBody ClientDTO clientDTO) throws EmailAlreadyExistsException {
-        return clientService.registerClient(clientDTO);
+    public ResponseEntity<ClientDTO> registerClient(@RequestBody ClientDTO clientDTO) {
+        ClientDTO createdClient = clientService.registerClient(clientDTO);
+        return new ResponseEntity<>(createdClient, HttpStatus.CREATED);
     }
 
     @PostMapping("/authenticate")
-    public ClientDTO authenticateClient(@RequestParam String email, @RequestParam String password) throws ClientNotFoundException {
-        return clientService.authenticateClient(email, password);
+    public ResponseEntity<ClientDTO> authenticateClient(@RequestParam String email, @RequestParam String password) {
+        ClientDTO authenticatedClient = clientService.authenticateClient(email, password);
+        return new ResponseEntity<>(authenticatedClient, HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public ClientDTO updateClient(@RequestBody ClientDTO clientDTO) {
-        return clientService.updateClient(clientDTO);
+    public ResponseEntity<ClientDTO> updateClient(@RequestBody ClientDTO clientDTO) {
+        ClientDTO updatedClient = clientService.updateClient(clientDTO);
+        return new ResponseEntity<>(updatedClient, HttpStatus.OK);
+
     }
 
     @GetMapping("/{email}")
-    public ClientDTO getClientByMail(@PathVariable String email) throws ClientNotFoundException {
-        return clientService.getClientByMail(email);
+    public ResponseEntity<ClientDTO> getClientByMail(@PathVariable String email) {
+        ClientDTO client = clientService.getClientByMail(email);
+        return new ResponseEntity<>(client, HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    public List<ClientDTO> getAllClients() {
-        return clientService.getAllClients();
+    public ResponseEntity<List<ClientDTO>> getAllClients() {
+        List<ClientDTO> clients = clientService.getAllClients();
+        return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteClientById(@PathVariable Long id) throws ClientNotFoundException {
+    public ResponseEntity<Void> deleteClientById(@PathVariable Long id)  {
         clientService.deleteClientById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

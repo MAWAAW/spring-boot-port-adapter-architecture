@@ -2,8 +2,8 @@ package org.mawaaw.springbootportadapterarchitecture.infrastructure.adapter.out.
 
 import org.mawaaw.springbootportadapterarchitecture.application.dto.RoomDTO;
 import org.mawaaw.springbootportadapterarchitecture.application.service.RoomServiceImpl;
-import org.mawaaw.springbootportadapterarchitecture.domain.exception.DuplicateRoomException;
-import org.mawaaw.springbootportadapterarchitecture.domain.exception.RoomNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,32 +19,38 @@ public class RoomController {
     }
 
     @PostMapping("/add")
-    public RoomDTO addRoom(@RequestBody RoomDTO roomDTO) throws DuplicateRoomException {
-        return roomService.addRoom(roomDTO);
+    public ResponseEntity<RoomDTO> addRoom(@RequestBody RoomDTO roomDTO) {
+        RoomDTO createdRoom = roomService.addRoom(roomDTO);
+        return new ResponseEntity<>(createdRoom, HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
-    public RoomDTO updateRoom(@RequestBody RoomDTO roomDTO) throws RoomNotFoundException {
-        return roomService.updateRoom(roomDTO);
+    public ResponseEntity<RoomDTO> updateRoom(@RequestBody RoomDTO roomDTO) {
+        RoomDTO updatedRoom = roomService.updateRoom(roomDTO);
+        return new ResponseEntity<>(updatedRoom, HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    public List<RoomDTO> getAllRooms() {
-        return roomService.getAllRooms();
+    public ResponseEntity<List<RoomDTO>> getAllRooms() {
+        List<RoomDTO> rooms = roomService.getAllRooms();
+        return new ResponseEntity<>(rooms, HttpStatus.OK);
     }
 
     @GetMapping("/{roomNumber}")
-    public RoomDTO getRoomByNumber(@PathVariable String roomNumber) throws RoomNotFoundException {
-        return roomService.getRoomByNumber(roomNumber);
+    public ResponseEntity<RoomDTO> getRoomByNumber(@PathVariable String roomNumber) {
+        RoomDTO room = roomService.getRoomByNumber(roomNumber);
+        return new ResponseEntity<>(room, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteClientById(@PathVariable Long id) throws RoomNotFoundException {
+    public ResponseEntity<Void> deleteRoomById(@PathVariable Long id) {
         roomService.deleteRoomById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/id/{id}")
-    public RoomDTO getById(@PathVariable Long id) throws RoomNotFoundException {
-        return roomService.findById(id);
+    public ResponseEntity<RoomDTO> getById(@PathVariable Long id) {
+        RoomDTO room = roomService.findById(id);
+        return new ResponseEntity<>(room, HttpStatus.OK);
     }
 }
