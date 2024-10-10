@@ -7,6 +7,7 @@ import org.mawaaw.springbootportadapterarchitecture.domain.exception.ClientNotFo
 import org.mawaaw.springbootportadapterarchitecture.domain.exception.EmailAlreadyExistsException;
 import org.mawaaw.springbootportadapterarchitecture.domain.model.Client;
 import org.mawaaw.springbootportadapterarchitecture.infrastructure.mapper.ClientMapper;
+import org.mawaaw.springbootportadapterarchitecture.infrastructure.security.CheckRole;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,6 +46,7 @@ public class ClientServiceImpl implements IClientService {
     }
 
     @Override
+    @CheckRole("USER")
     public ClientDTO updateClient(ClientDTO clientDTO) {
         Client client = clientMapper.fromClientDTOToClient(clientDTO);
         Client savedClient = clientRepository.save(client);
@@ -52,6 +54,7 @@ public class ClientServiceImpl implements IClientService {
     }
 
     @Override
+    @CheckRole("ADMIN")
     public ClientDTO getClientByMail(String email) throws ClientNotFoundException {
         Client client = clientRepository.findByEmail(email);
         if (client == null || !client.getEmail().equals(email)) {
@@ -61,6 +64,7 @@ public class ClientServiceImpl implements IClientService {
     }
 
     @Override
+    @CheckRole("ADMIN")
     public List<ClientDTO> getAllClients() {
         List<Client> clients = clientRepository.findAll();
         return clients.stream()
@@ -69,6 +73,7 @@ public class ClientServiceImpl implements IClientService {
     }
 
     @Override
+    @CheckRole("ADMIN")
     public void deleteClientById(Long id) throws ClientNotFoundException {
         if(!clientRepository.existsById(id)) {
             throw new ClientNotFoundException("Client with ID " + id + " not found.");

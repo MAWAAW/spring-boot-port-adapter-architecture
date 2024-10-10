@@ -15,6 +15,7 @@ import org.mawaaw.springbootportadapterarchitecture.domain.model.Room;
 import org.mawaaw.springbootportadapterarchitecture.infrastructure.mapper.ClientMapper;
 import org.mawaaw.springbootportadapterarchitecture.infrastructure.mapper.ReservationMapper;
 import org.mawaaw.springbootportadapterarchitecture.infrastructure.mapper.RoomMapper;
+import org.mawaaw.springbootportadapterarchitecture.infrastructure.security.CheckRole;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,7 @@ public class ReservationServiceImpl implements IReservationService {
     }
 
     @Override
+    @CheckRole("USER")
     public boolean isRoomAvailable(RoomDTO roomDTO, LocalDate checkINDate, LocalDate checkOUTDate) {
         Room room = roomMapper.fromRoomDTOToRoom(roomDTO);
 
@@ -67,6 +69,7 @@ public class ReservationServiceImpl implements IReservationService {
     }
 
     @Override
+    @CheckRole("USER")
     public ReservationDTO makeReservation(ClientDTO clientDTO, RoomDTO roomDTO, LocalDate checkINDate, LocalDate checkOUTDate) throws RoomNotFoundException, RoomNotAvailableException, ClientNotFoundException {
         if(!clientRepository.existsById(clientDTO.id())) {
             throw new ClientNotFoundException("Client with ID " + clientDTO.id() + " not found.");
@@ -96,6 +99,7 @@ public class ReservationServiceImpl implements IReservationService {
     }
 
     @Override
+    @CheckRole("USER")
     public void cancelReservation(Long reservationId) throws ReservationNotFoundException {
         if (!reservationRepository.existsById(reservationId) || reservationRepository.findById(reservationId).isEmpty()) {
             throw new ReservationNotFoundException("Reservation with ID " + reservationId + " not found.");
@@ -104,6 +108,7 @@ public class ReservationServiceImpl implements IReservationService {
     }
 
     @Override
+    @CheckRole("ADMIN")
     public List<ReservationDTO> getReservationsByClient(ClientDTO clientDTO) throws ClientNotFoundException, ClientSaveException {
         Client client = clientMapper.fromClientDTOToClient(clientDTO);
 
@@ -136,6 +141,7 @@ public class ReservationServiceImpl implements IReservationService {
     }
 
     @Override
+    @CheckRole("ADMIN")
     public List<ReservationDTO> getReservationsByRoom(RoomDTO roomDTO) {
         Room room = roomMapper.fromRoomDTOToRoom(roomDTO);
 
