@@ -1,10 +1,16 @@
 package org.mawaaw.springbootportadapterarchitecture.application.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import org.mawaaw.springbootportadapterarchitecture.domain.model.RoomType;
 
 import java.util.Objects;
 
-public record RoomDTO(Long id, String roomNumber, RoomType roomType) {
+public record RoomDTO(
+        Long id,
+        @NotBlank(message = "Room number is required")
+        String roomNumber,
+        RoomType roomType
+) {
 
     @Override
     public boolean equals(Object o) {

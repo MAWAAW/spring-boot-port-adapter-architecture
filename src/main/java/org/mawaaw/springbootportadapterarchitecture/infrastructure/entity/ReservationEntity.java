@@ -1,8 +1,6 @@
 package org.mawaaw.springbootportadapterarchitecture.infrastructure.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,13 +11,13 @@ import java.time.LocalDate;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
+@Table(name = "reservation")
 public class ReservationEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull(message = "Check-in date must not be null")
+    @Column(name = "check_in")
     private LocalDate checkIN;
-    @NotNull(message = "Check-out date must not be null")
-    @Future(message = "Check-out date must be in the future")
+    @Column(name = "check_out")
     private LocalDate checkOUT;
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
