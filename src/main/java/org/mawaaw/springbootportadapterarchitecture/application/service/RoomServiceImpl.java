@@ -27,7 +27,7 @@ public class RoomServiceImpl implements IRoomService {
 
     @Override
     @CheckRole("ADMIN")
-    public RoomDTO addRoom(RoomDTO roomDTO) throws DuplicateRoomException {
+    public RoomDTO addRoom(RoomDTO roomDTO) {
         if (roomRepository.existsByRoomNumber(roomDTO.roomNumber())) {
             throw new DuplicateRoomException("Room with number " + roomDTO.roomNumber() + " already exists.");
         }
@@ -38,7 +38,7 @@ public class RoomServiceImpl implements IRoomService {
 
     @Override
     @CheckRole("ADMIN")
-    public RoomDTO updateRoom(RoomDTO roomDTO) throws RoomNotFoundException {
+    public RoomDTO updateRoom(RoomDTO roomDTO) {
         if (!roomRepository.existsById(roomDTO.id())) {
             throw new RoomNotFoundException("Room with ID " + roomDTO.id() + " not found.");
         }
@@ -58,7 +58,7 @@ public class RoomServiceImpl implements IRoomService {
 
     @Override
     @CheckRole("USER")
-    public RoomDTO getRoomByNumber(String roomNumber) throws RoomNotFoundException {
+    public RoomDTO getRoomByNumber(String roomNumber) {
         Room room = roomRepository.findByRoomNumber(roomNumber);
         if (room == null || !room.getRoomNumber().equals(roomNumber)) {
             throw new RoomNotFoundException("Room with number " + roomNumber + " not found.");
@@ -68,7 +68,7 @@ public class RoomServiceImpl implements IRoomService {
 
     @Override
     @CheckRole("ADMIN")
-    public void deleteRoomById(Long id) throws RoomNotFoundException {
+    public void deleteRoomById(Long id) {
         if(!roomRepository.existsById(id)) {
             throw new RoomNotFoundException("Room with ID " + id + " not found.");
         }
@@ -81,7 +81,7 @@ public class RoomServiceImpl implements IRoomService {
 
     @Override
     @CheckRole("USER")
-    public RoomDTO findById(Long id) throws RoomNotFoundException {
+    public RoomDTO findById(Long id) {
         Room room = roomRepository.findById(id).orElseThrow(() -> new RoomNotFoundException("Room with ID " + id + " not found."));
         return roomMapper.fromRoomToRoomDTO(room);
     }

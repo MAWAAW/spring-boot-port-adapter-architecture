@@ -26,7 +26,7 @@ public class ClientServiceImpl implements IClientService {
     }
 
     @Override
-    public ClientDTO registerClient(ClientDTO clientDTO) throws EmailAlreadyExistsException {
+    public ClientDTO registerClient(ClientDTO clientDTO) {
         if (clientRepository.existsByEmail(clientDTO.email())) {
             throw new EmailAlreadyExistsException("Email " + clientDTO.email() + " already exists.");
         }
@@ -36,7 +36,7 @@ public class ClientServiceImpl implements IClientService {
     }
 
     @Override
-    public ClientDTO authenticateClient(String email, String password) throws ClientNotFoundException {
+    public ClientDTO authenticateClient(String email, String password) {
         Client client = clientRepository.findByEmail(email);
         if (client != null && client.getPassword() != null && client.getPassword().equals(password)) {
             return clientMapper.fromClientToClientDTO(client);
@@ -55,7 +55,7 @@ public class ClientServiceImpl implements IClientService {
 
     @Override
     @CheckRole("ADMIN")
-    public ClientDTO getClientByMail(String email) throws ClientNotFoundException {
+    public ClientDTO getClientByMail(String email) {
         Client client = clientRepository.findByEmail(email);
         if (client == null || !client.getEmail().equals(email)) {
             throw new ClientNotFoundException("Client with email " + email + " not found.");
@@ -74,13 +74,10 @@ public class ClientServiceImpl implements IClientService {
 
     @Override
     @CheckRole("ADMIN")
-    public void deleteClientById(Long id) throws ClientNotFoundException {
-        if(!clientRepository.existsById(id)) {
-            throw new ClientNotFoundException("Client with ID " + id + " not found.");
-        }
+    public void deleteClientById(Long id) {
         Optional<Client> clientOpt = clientRepository.findById(id);
         if (clientOpt.isEmpty()) {
-            throw new ClientNotFoundException("Room with ID " + id + " not found.");
+            throw new ClientNotFoundException("Client with ID " + id + " not found.");
         }
         clientRepository.deleteById(clientOpt.get().getId());
     }

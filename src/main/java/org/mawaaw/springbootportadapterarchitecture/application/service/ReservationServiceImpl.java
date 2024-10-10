@@ -70,7 +70,7 @@ public class ReservationServiceImpl implements IReservationService {
 
     @Override
     @CheckRole("USER")
-    public ReservationDTO makeReservation(ClientDTO clientDTO, RoomDTO roomDTO, LocalDate checkINDate, LocalDate checkOUTDate) throws RoomNotFoundException, RoomNotAvailableException, ClientNotFoundException {
+    public ReservationDTO makeReservation(ClientDTO clientDTO, RoomDTO roomDTO, LocalDate checkINDate, LocalDate checkOUTDate) {
         if(!clientRepository.existsById(clientDTO.id())) {
             throw new ClientNotFoundException("Client with ID " + clientDTO.id() + " not found.");
         }
@@ -100,7 +100,7 @@ public class ReservationServiceImpl implements IReservationService {
 
     @Override
     @CheckRole("USER")
-    public void cancelReservation(Long reservationId) throws ReservationNotFoundException {
+    public void cancelReservation(Long reservationId) {
         if (!reservationRepository.existsById(reservationId) || reservationRepository.findById(reservationId).isEmpty()) {
             throw new ReservationNotFoundException("Reservation with ID " + reservationId + " not found.");
         }
@@ -109,7 +109,7 @@ public class ReservationServiceImpl implements IReservationService {
 
     @Override
     @CheckRole("ADMIN")
-    public List<ReservationDTO> getReservationsByClient(ClientDTO clientDTO) throws ClientNotFoundException, ClientSaveException {
+    public List<ReservationDTO> getReservationsByClient(ClientDTO clientDTO) {
         Client client = clientMapper.fromClientDTOToClient(clientDTO);
 
         // Check if the client exists in the database
