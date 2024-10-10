@@ -19,11 +19,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(DuplicateClientException.class)
-    public ResponseEntity<String> handleDuplicateClientException(DuplicateClientException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
-    }
-
     @ExceptionHandler(DuplicateRoomException.class)
     public ResponseEntity<String> handleDuplicateRoomException(DuplicateRoomException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
