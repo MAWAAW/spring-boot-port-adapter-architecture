@@ -1,5 +1,6 @@
 package org.mawaaw.springbootportadapterarchitecture.infrastructure.adapter.out.rest;
 
+import jakarta.validation.Valid;
 import org.mawaaw.springbootportadapterarchitecture.application.dto.ClientDTO;
 import org.mawaaw.springbootportadapterarchitecture.application.service.ClientServiceImpl;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class ClientController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ClientDTO> registerClient(@RequestBody ClientDTO clientDTO) {
+    public ResponseEntity<ClientDTO> registerClient(@Valid @RequestBody ClientDTO clientDTO) {
         ClientDTO createdClient = clientService.registerClient(clientDTO);
         return new ResponseEntity<>(createdClient, HttpStatus.CREATED);
     }
@@ -31,7 +32,7 @@ public class ClientController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ClientDTO> updateClient(@RequestBody ClientDTO clientDTO) {
+    public ResponseEntity<ClientDTO> updateClient(@Valid @RequestBody ClientDTO clientDTO) {
         ClientDTO updatedClient = clientService.updateClient(clientDTO);
         return new ResponseEntity<>(updatedClient, HttpStatus.OK);
 

@@ -3,6 +3,7 @@ package org.mawaaw.springbootportadapterarchitecture.infrastructure.exception;
 import org.mawaaw.springbootportadapterarchitecture.domain.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -42,5 +43,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RoomNotFoundException.class)
     public ResponseEntity<String> handleRoomNotFoundException(RoomNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        StringBuilder errors = new StringBuilder();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String errorMessage = error.getDefaultMessage();
+            errors.append(errorMessage).append("; ");
+        });
+        return new ResponseEntity<>(errors.toString(), HttpStatus.BAD_REQUEST);
     }
 }
