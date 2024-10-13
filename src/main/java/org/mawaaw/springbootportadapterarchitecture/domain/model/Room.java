@@ -1,13 +1,10 @@
 package org.mawaaw.springbootportadapterarchitecture.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-@Data @AllArgsConstructor @NoArgsConstructor @Builder
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString @Builder
 public class Room {
     private Long id;
     private String roomNumber;
