@@ -1,16 +1,13 @@
 package org.mawaaw.springbootportadapterarchitecture.infrastructure.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.mawaaw.springbootportadapterarchitecture.domain.model.ReservationStatus;
 
 import java.time.LocalDate;
 
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor @Builder
+@NoArgsConstructor @AllArgsConstructor @Getter @Setter @ToString @Builder
 @Table(name = "reservation")
 public class ReservationEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

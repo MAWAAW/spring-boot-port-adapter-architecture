@@ -1,15 +1,12 @@
 package org.mawaaw.springbootportadapterarchitecture.infrastructure.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Data @NoArgsConstructor @AllArgsConstructor @Builder
+@NoArgsConstructor @AllArgsConstructor @Getter @Setter @ToString @Builder
 @Table(name = "client")
 public class ClientEntity {
     @Id
